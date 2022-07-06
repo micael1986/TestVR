@@ -9,10 +9,10 @@ namespace TestVR.Drivers
 
       BrowserType browserType = BrowserType.CHROME;
 
-      // if (string.IsNullOrEmpty(SeleniumRemoteUrl()))
-      // {
-      //   browserType = BrowserType.CHROMEHEADLESS;
-      // }
+       if (string.IsNullOrEmpty(SeleniumRemoteUrl()))
+       {
+         browserType = BrowserType.CHROMEHEADLESS;
+       }
 
       string? browserTypeEnv = Environment.GetEnvironmentVariable("BROWSER");
 
