@@ -7,17 +7,20 @@ namespace TestVR.Helpers
 {
   public class Waits
   {
-    private readonly IWebDriver _webDriver;
     private readonly WebDriverWait _webDriverWait;
 
-    public Waits(BrowserDriver browserDriver)
+    public Waits(WebDriverWait webDriverWait)
     {
-      _webDriver = browserDriver.Current;
-      _webDriverWait = browserDriver.CurrentWait;
+      _webDriverWait = webDriverWait;
     }
-    public void waitElementVisible(IWebElement element)
+    public void waitElemenClickable(IWebElement element)
     {
       _webDriverWait.Until(ExpectedConditions.ElementToBeClickable(element));
+    }
+
+    public void waitElementNotPresent(IWebElement element)
+    {
+      _webDriverWait.Until(d => !element.Displayed);
     }
   }
 }

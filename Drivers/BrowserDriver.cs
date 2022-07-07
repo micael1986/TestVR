@@ -11,13 +11,15 @@ namespace TestVR.Drivers
     private readonly Lazy<WebDriverWait> _waitLazy;
 
     private readonly TimeSpan _waitDuration = TimeSpan.FromSeconds(30);
+
+    private readonly TimeSpan _implicitWait = TimeSpan.FromSeconds(10);
     private bool _isDisposed;
 
     public BrowserDriver()
     {
       _currentWebDriverLazy = new Lazy<IWebDriver>(GetWebDriver);
       _waitLazy = new Lazy<WebDriverWait>(GetWebDriverWait);
-
+      Current.Manage().Timeouts().ImplicitWait = _implicitWait;
     }
 
     public IWebDriver Current => _currentWebDriverLazy.Value;

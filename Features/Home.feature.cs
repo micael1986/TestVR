@@ -19,7 +19,7 @@ namespace TestVR.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class HomeFeature : object, Xunit.IClassFixture<HomeFeature.FixtureData>, System.IDisposable
+    public partial class VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature : object, Xunit.IClassFixture<VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace TestVR.Features
 #line 1 "Home.feature"
 #line hidden
         
-        public HomeFeature(HomeFeature.FixtureData fixtureData, TestVR_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature(VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature.FixtureData fixtureData, TestVR_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace TestVR.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Home", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-UK"), "Features", "Verify the toolbar in homepage when the browser is maximized", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,20 +75,29 @@ namespace TestVR.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 3
+  #line hidden
+#line 4
+    testRunner.Given("the verisk home page open", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add two numbers2")]
-        [Xunit.TraitAttribute("FeatureTitle", "Home")]
-        [Xunit.TraitAttribute("Description", "Add two numbers2")]
-        public void AddTwoNumbers2()
+        [Xunit.SkippableFactAttribute(DisplayName="The logo is shown in the toolbar")]
+        [Xunit.TraitAttribute("FeatureTitle", "Verify the toolbar in homepage when the browser is maximized")]
+        [Xunit.TraitAttribute("Description", "The logo is shown in the toolbar")]
+        public void TheLogoIsShownInTheToolbar()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers2", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The logo is shown in the toolbar", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 6
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,11 +107,85 @@ namespace TestVR.Features
             else
             {
                 this.ScenarioStart();
-#line 4
-    testRunner.Given("the verisk homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 3
+  this.FeatureBackground();
 #line hidden
-#line 5
-    testRunner.Then("the logo is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 7
+    testRunner.Then("the logo is shown in navigation bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="The nav options are shown in the homepage")]
+        [Xunit.TraitAttribute("FeatureTitle", "Verify the toolbar in homepage when the browser is maximized")]
+        [Xunit.TraitAttribute("Description", "The nav options are shown in the homepage")]
+        [Xunit.InlineDataAttribute("Products", new string[0])]
+        [Xunit.InlineDataAttribute("News", new string[0])]
+        [Xunit.InlineDataAttribute("Company", new string[0])]
+        [Xunit.InlineDataAttribute("Careers", new string[0])]
+        [Xunit.InlineDataAttribute("Contact", new string[0])]
+        public void TheNavOptionsAreShownInTheHomepage(string element, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("element", element);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The nav options are shown in the homepage", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 9
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+  this.FeatureBackground();
+#line hidden
+#line 10
+    testRunner.Then(string.Format("the {0} is shown in navigation bar", element), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+    testRunner.And(string.Format("the {0} has the text {0} in navigation bar", element), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="The user can navigate to the contact page from homepage")]
+        [Xunit.TraitAttribute("FeatureTitle", "Verify the toolbar in homepage when the browser is maximized")]
+        [Xunit.TraitAttribute("Description", "The user can navigate to the contact page from homepage")]
+        public void TheUserCanNavigateToTheContactPageFromHomepage()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The user can navigate to the contact page from homepage", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 20
+  this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 3
+  this.FeatureBackground();
+#line hidden
+#line 21
+    testRunner.When("the Contact is shown in navigation bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+    testRunner.And("the user accept all in cookie modal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 23
+    testRunner.And("the user clicks on Contact in navigation bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 24
+    testRunner.Then("the contact page is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -115,12 +198,12 @@ namespace TestVR.Features
             
             public FixtureData()
             {
-                HomeFeature.FeatureSetup();
+                VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                HomeFeature.FeatureTearDown();
+                VerifyTheToolbarInHomepageWhenTheBrowserIsMaximizedFeature.FeatureTearDown();
             }
         }
     }

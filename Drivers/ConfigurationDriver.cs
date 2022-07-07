@@ -3,16 +3,15 @@ namespace TestVR.Drivers
   public class ConfigurationDriver
   {
 
-
     public static BrowserType Browser()
     {
 
       BrowserType browserType = BrowserType.CHROME;
 
-       if (string.IsNullOrEmpty(SeleniumRemoteUrl()))
-       {
-         browserType = BrowserType.CHROMEHEADLESS;
-       }
+      if (string.IsNullOrEmpty(SeleniumRemoteUrl()))
+      {
+        browserType = BrowserType.CHROMEHEADLESS;
+      }
 
       string? browserTypeEnv = Environment.GetEnvironmentVariable("BROWSER");
 

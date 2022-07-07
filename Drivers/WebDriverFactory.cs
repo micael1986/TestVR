@@ -15,16 +15,27 @@ namespace TestVR.Drivers
     {
       BrowserType browserType = ConfigurationDriver.Browser();
       string remoteUrl = ConfigurationDriver.SeleniumRemoteUrl();
+      IWebDriver webDriver;
 
       switch (browserType)
       {
-        case BrowserType.CHROME: return GetChromeDriver(false);
-        case BrowserType.FIREFOX: return GetFirefoxDriver(false);
-        case BrowserType.CHROMEHEADLESS: return GetChromeDriver(true);
-        case BrowserType.FIREFOXHEADLESS: return GetFirefoxDriver(true);
-        default: throw new NotSupportedException("not supported browser");
-
+        case BrowserType.CHROME:
+          webDriver = GetChromeDriver(false);
+          break;
+        case BrowserType.FIREFOX:
+          webDriver = GetFirefoxDriver(false);
+          break;
+        case BrowserType.CHROMEHEADLESS:
+          webDriver = GetChromeDriver(true);
+          break;
+        case BrowserType.FIREFOXHEADLESS:
+          webDriver = GetFirefoxDriver(true);
+          break;
+        default:
+          throw new NotSupportedException("not supported browser");
       }
+      webDriver.Manage().Window.Maximize();
+      return webDriver;
     }
 
     private static IWebDriver GetFirefoxDriver(bool isHeadless)
@@ -41,7 +52,8 @@ namespace TestVR.Drivers
       var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
       if (isHeadless)
       {
-        firefoxOptions.AddArgument("headless");
+        firefoxOptions.AddArgument("--headless");
+        firefoxOptions.AddArgument("window-size=1920,1080");
       }
       return new FirefoxDriver(firefoxDriverService, firefoxOptions);
     }
@@ -60,6 +72,7 @@ namespace TestVR.Drivers
       if (isHeadless)
       {
         chromeOptions.AddArgument("headless");
+        chromeOptions.AddArgument("window-size=1920,1080");
       }
       return new ChromeDriver(chromeDriverService, chromeOptions);
     }
