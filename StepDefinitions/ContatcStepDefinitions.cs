@@ -3,7 +3,6 @@ using FluentAssertions;
 using OpenQA.Selenium;
 using TestVR.Drivers;
 using TestVR.PageObjects;
-using TestVR.Helpers;
 
 
 namespace TestVR.Steps
@@ -19,7 +18,7 @@ namespace TestVR.Steps
     }
 
     [Given("the verisk contact page open")]
-    public void openThePage()
+    public void contactOpenThePage()
     {
       _contact.navigate();
       _contact.present();
@@ -44,7 +43,7 @@ namespace TestVR.Steps
     public void contactPageElementHasText(string element, string text)
     {
       _contact.present();
-      _contact.getWebElement(element).GetAttribute("innerText").Should().Be(text);
+      _contact.getWebElement(element).FindElement(By.CssSelector("label")).GetAttribute("innerText").Should().Be(text);
     }
 
     [Then("the contact page is shown")]

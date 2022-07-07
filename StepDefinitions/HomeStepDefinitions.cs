@@ -19,7 +19,7 @@ namespace TestVR.Steps
     }
 
     [Given("the verisk home page open")]
-    public void openThePage()
+    public void homePageOpenThePage()
     {
       _home.navigate();
       _home.present();
