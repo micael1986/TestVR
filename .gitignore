@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Visual studio code
 .vscode/
+
+# Specflow
+*.feature.cs

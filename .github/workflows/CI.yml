@@ -33,6 +33,7 @@ jobs:
         with:
           name: test-results
           path: TestResults/*
+      - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: test-images
