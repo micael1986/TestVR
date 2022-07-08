@@ -1,10 +1,6 @@
 using TechTalk.SpecFlow;
-using FluentAssertions;
-using OpenQA.Selenium;
 using TestVR.Drivers;
 using TestVR.PageObjects;
-using TestVR.Helpers;
-
 
 namespace TestVR.Steps
 {
@@ -22,6 +18,13 @@ namespace TestVR.Steps
     public void cookieModalAcceptAll()
     {
       _cookieModal.acceptAll();
+      _cookieModal.notPresent();
+    }
+
+    [When("the user accept all in cookie modal if exist")]
+    public void cookieModalAcceptAllIfExist()
+    {
+      if (_cookieModal.isModalPresent()) _cookieModal.acceptAll();
       _cookieModal.notPresent();
     }
 

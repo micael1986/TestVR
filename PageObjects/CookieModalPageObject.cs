@@ -41,5 +41,10 @@ namespace TestVR.PageObjects
       GetWaits.waitElementNotPresent(Modal);
     }
 
+    public bool isModalPresent()
+    {
+      return Modal.Displayed;
+    }
+
   }
 }

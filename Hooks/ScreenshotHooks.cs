@@ -1,8 +1,7 @@
 using TestVR.Drivers;
-using OpenQA.Selenium.Support.Extensions;
 using TechTalk.SpecFlow;
 using OpenQA.Selenium;
-
+using TestVR.Helpers;
 namespace TestVR.Hooks
 {
   [Binding]
@@ -22,6 +21,8 @@ namespace TestVR.Hooks
     {
       if (_scenarioContext.ScenarioExecutionStatus == ScenarioExecutionStatus.TestError)
       {
+        string browserName = SeleniumHelper.isChrome(_browserDriver.Current) ? "chrome" : "firefox";
+        Console.WriteLine(_browserDriver.Current.GetType());
         if (_browserDriver.Current is ITakesScreenshot takesScreenshot)
         {
           var path = Directory.GetCurrentDirectory();
@@ -29,9 +30,9 @@ namespace TestVR.Hooks
           Directory.CreateDirectory(screenshotPath);
           var tempFile = Path.GetFileNameWithoutExtension(Path.GetTempFileName());
           var screenshot = takesScreenshot.GetScreenshot();
-          var tempFileName = Path.Combine(screenshotPath, tempFile) + ".jpeg";
-          screenshot.SaveAsFile(tempFileName, ScreenshotImageFormat.Jpeg);
           var scenarioTitle = _scenarioContext.ScenarioInfo.Title;
+          var tempFileName = Path.Combine(screenshotPath, $"{scenarioTitle}-{browserName}-{tempFile}") + ".jpeg";
+          screenshot.SaveAsFile(tempFileName, ScreenshotImageFormat.Jpeg);
           Console.WriteLine($"SCENARIO: {scenarioTitle} -> SCREENSHOT: [ {tempFileName} ]");
         }
       }

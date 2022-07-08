@@ -1,4 +1,4 @@
-using System;
+using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -21,33 +21,25 @@ namespace TestVR.PageObjects
     }
 
     //Finding elements by ID
-    private IWebElement Logo => _webDriver.FindElement(By.CssSelector("[class*=header-logo]"));
-    private IWebElement Products => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/products/']"));
-    private IWebElement News => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/news/']"));
-    private IWebElement Company => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/company/']"));
-    private IWebElement Careers => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/careers/']"));
-    private IWebElement Contact => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/contact/']"));
+    public IWebElement Logo => _webDriver.FindElement(By.CssSelector("[class*=header-logo]"));
+    public IWebElement Products => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/products/']"));
+    public IWebElement News => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/news/']"));
+    public IWebElement Company => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/company/']"));
+    public IWebElement Careers => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/careers/']"));
+    public IWebElement Contact => _webDriver.FindElement(By.CssSelector("li[class*='lg'] a[href='/contact/']"));
 
     public void present()
     {
       _webDriverWait.Until(ExpectedConditions.ElementToBeClickable(Logo));
     }
 
-    public IWebElement GetWebElement(string element)
+    public IWebElement GetWebElement(string elementName)
     {
-      string lower = element.ToLower();
-      switch (lower)
-      {
-        case "logo": return Logo;
-        case "products": return Products;
-        case "news": return News;
-        case "company": return Company;
-        case "careers": return Careers;
-        case "contact": return Contact;
-        default: throw new NotSupportedException("Element not found");
-      }
+      string methodName = $"get_{TextHelper.FirstCharToUpper(elementName)}";
+      var webElement = this.GetType().GetMethod(methodName)?.Invoke(this, null) as IWebElement
+      ?? throw new NotSupportedException("Element not found");
+      return webElement;
     }
-
     public Waits GetWaits()
     {
       return new Waits(_webDriverWait);

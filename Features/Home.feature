@@ -1,4 +1,4 @@
-Feature: Verify the toolbar in homepage when the browser is maximized
+Feature: Verify the toolbar in homepage when the browser is greater or equal than 1024
 
   Background: Open homepage
     Given the verisk home page open
@@ -19,6 +19,6 @@ Feature: Verify the toolbar in homepage when the browser is maximized
 
   Scenario: The user can navigate to the contact page from homepage
     When the Contact is shown in navigation bar
-    And the user accept all in cookie modal
+    And the user accept all in cookie modal if exist
     And the user clicks on Contact in navigation bar
     Then the contact page is shown

@@ -1,10 +1,6 @@
 using TechTalk.SpecFlow;
-using FluentAssertions;
-using OpenQA.Selenium;
 using TestVR.Drivers;
 using TestVR.PageObjects;
-using TestVR.Helpers;
-
 
 namespace TestVR.Steps
 {

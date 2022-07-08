@@ -22,7 +22,7 @@ namespace TestVR.PageObjects
     }
 
     //Finding elements by ID
-    private IWebElement Logo => _webDriver.FindElement(By.CssSelector("[class*=header-logo]"));
+    private IWebElement Video => _webDriver.FindElement(By.CssSelector("[class*='banner is-video']"));
 
     public void navigate()
     {
@@ -31,7 +31,7 @@ namespace TestVR.PageObjects
 
     public void present()
     {
-      _webDriverWait.Until(ExpectedConditions.ElementToBeClickable(Logo));
+      _webDriverWait.Until(ExpectedConditions.ElementToBeClickable(Video));
     }
 
     public Waits GetWaits()

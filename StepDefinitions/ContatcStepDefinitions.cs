@@ -4,7 +4,6 @@ using OpenQA.Selenium;
 using TestVR.Drivers;
 using TestVR.PageObjects;
 
-
 namespace TestVR.Steps
 {
   [Binding]
@@ -27,9 +26,26 @@ namespace TestVR.Steps
     [When("the user clicks on (.*) in contact page")]
     public void contactPageElementIsClicked(string element)
     {
-      IWebElement webElement = _contact.getWebElement(element);
+      IWebElement webElement = _contact.getWebElement(element).FindElement(By.CssSelector("select,input"));
       _contact.GetWaits.waitElemenClickable(webElement);
       webElement.Click();
+    }
+
+    [When("the user select (.*) from Enquiry Type dropdown in contact page")]
+    public void contactPageEnquiryTypeElementIsClicked(string element)
+    {
+      this.contactPageElementIsClicked("Enquiry Type");
+      IWebElement webElement = _contact.getEnquiryTypeWebElement(element);
+      _contact.GetWaits.waitElemenClickable(webElement);
+      webElement.Click();
+
+    }
+
+    [When("the user edit (.*) with the value (.*) in contact page")]
+    public void contactPageEditElement(string element, string value)
+    {
+      IWebElement webElement = _contact.getWebElement(element).FindElement(By.CssSelector("input,textarea"));
+      webElement.SendKeys(value);
     }
 
     [When("the (.*) is shown in contact page")]
@@ -39,11 +55,19 @@ namespace TestVR.Steps
       _contact.getWebElement(element).TagName.Should().NotBeNull();
     }
 
-    [Then("the (.*) has the text (.*) in contact")]
-    public void contactPageElementHasText(string element, string text)
+    [Then("the (.*) has the label text (.*) in contact page")]
+    public void contactPageElementHasLabelText(string element, string text)
     {
       _contact.present();
-      _contact.getWebElement(element).FindElement(By.CssSelector("label")).GetAttribute("innerText").Should().Be(text);
+      _contact.getWebElement(element).FindElement(By.TagName("label")).GetAttribute("innerText").Should().Be(text);
+    }
+
+    [Then("the (.*) has the error text (.*) in contact page")]
+    public void contactPageElementHasErrorText(string element, string text)
+    {
+      _contact.present();
+      By by = By.CssSelector("[class=field-validation-error]");
+      _contact.getWebElement(element).FindElement(by).GetAttribute("innerText").Should().Be(text);
     }
 
     [Then("the contact page is shown")]
@@ -52,6 +76,12 @@ namespace TestVR.Steps
       _contact.present().Should().BeTrue();
     }
 
+    [Then("the enquiry type dropdown has the text (.*) in contact page")]
+    public void contactPageEnquiryTypeHasElement(string text)
+    {
+      _contact.present();
+      _contact.getEnquiryTypeWebElement(text).GetAttribute("innerText").Should().Be(text);
+    }
 
   }
 }

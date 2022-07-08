@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        Plan: [chromeheadless, firefoxheadless]
+        Browser: [chromeheadless, firefoxheadless]
+        RemoteUrl: ["", "http://localhost:4444/wd/hub"]
 
     steps:
       - uses: actions/checkout@v3
@@ -23,10 +24,16 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
-      - name: Test ${{matrix.Plan}}
-        run: dotnet test --no-build --verbosity normal -e BROWSER=${{matrix.Plan}} --logger "trx;LogFileName=test-results-${{matrix.Plan}}.trx"
+      - name: Run selenium grid
+        run: docker-compose up --scale chrome=2 --scale firefox=2 -d
+      - name: Test ${{matrix.Browser}}
+        run: dotnet test --no-build --verbosity normal -e BROWSER=${{matrix.Browser}} -e SELENIUM_REMOTE_URL=${{matrix.RemoteUrl}} --logger "trx;LogFileName=test-results-${{matrix.Plan}}.trx"
       - uses: actions/upload-artifact@v2
         if: success() || failure()
         with:
           name: test-results
           path: TestResults/*
+        if: failure()
+        with:
+          name: test-images
+          path: bin/Debug/*/Screenshots/*
