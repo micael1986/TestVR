@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        Browser: [chromeheadless, firefoxheadless]
-        RemoteUrl: ["", "http://127.0.0.1:4444/wd/hub"]
+        Browser: [chrome, firefox]
+        Mode: ["headless", "remote"]
 
     steps:
       - uses: actions/checkout@v3
@@ -25,13 +25,13 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Run selenium grid
-        if: ${{ matrix.RemoteUrl }}
+        if: ${{ matrix.Mode }} == "remote"
         run: |
           docker-compose up --scale chrome=2 --scale firefox=2 -d
           chmod +x ./wait_for_grid.sh
           ./wait_for_grid.sh
       - name: Test ${{matrix.Browser}}
-        run: dotnet test --no-build --verbosity normal -e BROWSER=${{matrix.Browser}} -e SELENIUM_REMOTE_URL=${{matrix.RemoteUrl}} --logger "trx;LogFileName=test-results-${{matrix.Plan}}.trx"
+        run: dotnet test --no-build --verbosity normal -e BROWSER=${{matrix.Browser}} -e MODE=${{matrix.Mode}} --logger "trx;LogFileName=test-results-${{matrix.Plan}}.trx"
       - uses: actions/upload-artifact@v2
         if: success() || failure()
         with:

@@ -1,42 +1,22 @@
-using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using TestVR.Drivers;
-using TestVR.Helpers;
-
 namespace TestVR.PageObjects
 {
-  public class HomePageObject
+  public class HomePageObject : BasePageObject
   {
-    private const string baseUrl = "https://www.verisksequel.com";
+    public HomePageObject(BrowserDriver browserDriver) : base(browserDriver) { }
 
-    private readonly IWebDriver _webDriver;
-
-    private readonly WebDriverWait _webDriverWait;
-
-    public HomePageObject(BrowserDriver browserDriver)
-    {
-      _webDriver = browserDriver.Current;
-      _webDriverWait = browserDriver.CurrentWait;
-    }
-
-    //Finding elements by ID
-    private IWebElement Video => _webDriver.FindElement(By.CssSelector("[class*='banner is-video']"));
+    private IWebElement Video => this._webDriver.FindElement(By.CssSelector("[class*='banner is-video']"));
 
     public void navigate()
     {
-      _webDriver.Navigate().GoToUrl(baseUrl);
+      _webDriver.Navigate().GoToUrl(this.GetBaseUrl);
     }
 
     public void present()
     {
       _webDriverWait.Until(ExpectedConditions.ElementToBeClickable(Video));
-    }
-
-    public Waits GetWaits()
-    {
-      return new Waits(_webDriverWait);
     }
 
   }

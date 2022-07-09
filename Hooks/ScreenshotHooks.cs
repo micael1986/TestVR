@@ -31,7 +31,7 @@ namespace TestVR.Hooks
           var tempFile = Path.GetFileNameWithoutExtension(Path.GetTempFileName());
           var screenshot = takesScreenshot.GetScreenshot();
           var scenarioTitle = _scenarioContext.ScenarioInfo.Title;
-          var tempFileName = Path.Combine(screenshotPath, $"{scenarioTitle}-{browserName}-{tempFile}") + ".jpeg";
+          var tempFileName = Path.Combine(screenshotPath, $"{scenarioTitle}-{browserName}-{tempFile}.jpeg");
           screenshot.SaveAsFile(tempFileName, ScreenshotImageFormat.Jpeg);
           Console.WriteLine($"SCENARIO: {scenarioTitle} -> SCREENSHOT: [ {tempFileName} ]");
         }

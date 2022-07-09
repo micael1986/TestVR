@@ -14,22 +14,15 @@ namespace TestVR.Drivers
     public static IWebDriver CreateWebDriver()
     {
       BrowserType browserType = ConfigurationDriver.Browser();
-      string remoteUrl = ConfigurationDriver.SeleniumRemoteUrl();
       IWebDriver webDriver;
 
       switch (browserType)
       {
         case BrowserType.CHROME:
-          webDriver = GetChromeDriver(false);
+          webDriver = GetChromeDriver();
           break;
         case BrowserType.FIREFOX:
-          webDriver = GetFirefoxDriver(false);
-          break;
-        case BrowserType.CHROMEHEADLESS:
-          webDriver = GetChromeDriver(true);
-          break;
-        case BrowserType.FIREFOXHEADLESS:
-          webDriver = GetFirefoxDriver(true);
+          webDriver = GetFirefoxDriver();
           break;
         default:
           throw new NotSupportedException("not supported browser");
@@ -38,44 +31,40 @@ namespace TestVR.Drivers
       return webDriver;
     }
 
-    private static IWebDriver GetFirefoxDriver(bool isHeadless)
+    private static IWebDriver GetFirefoxDriver()
     {
       var firefoxOptions = new FirefoxOptions();
-      string remoteUrl = ConfigurationDriver.SeleniumRemoteUrl();
 
-      if (Uri.IsWellFormedUriString(remoteUrl, UriKind.Absolute))
+      if (ConfigurationDriver.Mode() == ModeType.REMOTE)
       {
-        Uri uri = new Uri(remoteUrl);
-        return new RemoteWebDriver(uri, firefoxOptions);
+        return new RemoteWebDriver(ConfigurationDriver.SeleniumRemoteUrl(), firefoxOptions);
       }
-
+      if (isHeadless()) firefoxOptions.AddArguments(getHeadlessArguments());
       var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
-      if (isHeadless)
-      {
-        firefoxOptions.AddArgument("--headless");
-        firefoxOptions.AddArgument("window-size=1920,1080");
-      }
       return new FirefoxDriver(firefoxDriverService, firefoxOptions);
     }
 
-    private static IWebDriver GetChromeDriver(bool isHeadless)
+    private static IWebDriver GetChromeDriver()
     {
       var chromeOptions = new ChromeOptions();
-      string remoteUrl = ConfigurationDriver.SeleniumRemoteUrl();
-      if (Uri.IsWellFormedUriString(remoteUrl, UriKind.Absolute))
-      {
-        Uri uri = new Uri(remoteUrl);
-        return new RemoteWebDriver(uri, chromeOptions);
-      }
-      var chromeDriverService = ChromeDriverService.CreateDefaultService();
 
-      if (isHeadless)
+      if (ConfigurationDriver.Mode() == ModeType.REMOTE)
       {
-        chromeOptions.AddArgument("headless");
-        chromeOptions.AddArgument("window-size=1920,1080");
+        return new RemoteWebDriver(ConfigurationDriver.SeleniumRemoteUrl(), chromeOptions);
       }
+      if (isHeadless()) chromeOptions.AddArguments(getHeadlessArguments());
+      var chromeDriverService = ChromeDriverService.CreateDefaultService();
       return new ChromeDriver(chromeDriverService, chromeOptions);
     }
 
+    private static bool isHeadless()
+    {
+      return ConfigurationDriver.Mode() == ModeType.HEADLESS;
+    }
+
+    private static string[] getHeadlessArguments()
+    {
+      return new string[] { "--headless", "window-size=1920,1080" };
+    }
   }
 }

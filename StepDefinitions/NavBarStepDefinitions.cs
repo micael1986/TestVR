@@ -20,8 +20,8 @@ namespace TestVR.Steps
     [When("the user clicks on (.*) in navigation bar")]
     public void homepageElementIsClicked(string element)
     {
-      IWebElement webElement = _navBar.GetWebElement(element);
-      _navBar.GetWaits().waitElemenClickable(webElement);
+      IWebElement webElement = _navBar.getWebElement(element);
+      _navBar.GetWaits.waitElemenClickable(webElement);
       webElement.Click();
     }
 
@@ -29,14 +29,14 @@ namespace TestVR.Steps
     [Then("the (.*) is shown in navigation bar")]
     public void homepageElementIsShownInPage(string element)
     {
-      _navBar.GetWebElement(element).TagName.Should().NotBeNull();
+      _navBar.getWebElement(element).TagName.Should().NotBeNull();
     }
 
     [Then("the (.*) has the text (.*) in navigation bar")]
     public void homepageElementHasText(string element, string text)
     {
       _navBar.present();
-      _navBar.GetWebElement(element).GetAttribute("innerText").Should().Be(text);
+      _navBar.getWebElement(element).GetAttribute("innerText").Should().Be(text);
     }
 
   }
