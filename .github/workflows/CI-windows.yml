@@ -30,6 +30,7 @@ jobs:
           docker-compose up --scale chrome=2 --scale firefox=2 -d
           chmod +x ./wait_for_grid.sh
           ./wait_for_grid.sh
+        shell: bash
       - name: Test ${{matrix.browser}}
         run: dotnet test --no-build --verbosity normal -e BROWSER=${{matrix.browser}} -e MODE=${{matrix.mode}} --logger "trx;LogFileName=test-results-${{matrix.Plan}}.trx"
       - uses: actions/upload-artifact@v2
