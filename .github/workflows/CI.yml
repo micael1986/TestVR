@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Run selenium grid
-        if: matrix.mode == remote
+        if: matrix.mode == 'remote'
         run: |
           docker-compose up --scale chrome=2 --scale firefox=2 -d
           chmod +x ./wait_for_grid.sh
