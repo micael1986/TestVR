@@ -26,9 +26,10 @@ jobs:
         run: dotnet build --no-restore
       - name: Run selenium grid
         if: matrix.mode == 'remote'
+        working-directory: ./SeleniumGrid
         run: |
-          docker-compose -f ./SeleniumGrid/docker-compose.yml up --scale chrome=2 --scale firefox=2 -d
-          chmod +x ./SeleniumGrid/wait_for_grid.sh
+          docker-compose up --scale chrome=2 --scale firefox=2 -d
+          chmod +x ./wait_for_grid.sh
           ./wait_for_grid.sh
         shell: bash
       - name: Test ${{matrix.browser}}
