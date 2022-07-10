@@ -4,26 +4,23 @@ Feature: Verify the contact form fields
     Given the verisk contact page open
 
 
-  Scenario Outline: The mandatory field has *
-    Then the <element> is shown in contact page
-    And  the <element> has the label text <text> in contact page
-    Examples:
-      | element       | text                                                                                                                                                                                                                                                        |
-      | Name          | Name *                                                                                                                                                                                                                                                      |
-      | Company       | Company *                                                                                                                                                                                                                                                   |
-      | Job Title     | Job Title *                                                                                                                                                                                                                                                 |
-      | Email address | Email address *                                                                                                                                                                                                                                             |
-      | Phone number  | Phone number *                                                                                                                                                                                                                                              |
-      | Message       | Message *                                                                                                                                                                                                                                                   |
-      | Enquiry Type  | Enquiry Type *                                                                                                                                                                                                                                              |
-      | Subscribing   | By subscribing to this, you are consenting to Verisk processing your personal information for the purpose of providing updates in relation to products and services that may be of interest. We will store this data until such time as you ask us to stop. |
-      | Recaptcha     | Recaptcha *                                                                                                                                                                                                                                                 |
+  Scenario: The mandatory field has *
+    When the 'Name,Company,Job Title,Email address,Phone number,Message,Enquiry Type,Subscribing,Recaptcha' are shown in contact page
+    Then the Name has the label text Name * in contact page
+    And the Company has the label text Company * in contact page
+    And the Job Title has the label text Job Title * in contact page
+    And the Email address has the label text Email address * in contact page
+    And the Phone number has the label text Phone number * in contact page
+    And the Message has the label text Message * in contact page
+    And the Enquiry Type has the label text Enquiry Type * in contact page
+    And the Subscribing has the label text By subscribing to this, you are consenting to Verisk processing your personal information for the purpose of providing updates in relation to products and services that may be of interest. We will store this data until such time as you ask us to stop. in contact page
+    And the Recaptcha has the label text Recaptcha * in contact page
 
   Scenario Outline: An error message is shown in the mandatory fields (Less Recaptcha, maybe bug?)
     When the user accept all in cookie modal if exist
     And the <element> is shown in contact page
     And the user clicks on Submit in contact page
-    Then  the <element> has the error text <text> in contact page
+    Then the <element> has the error text <text> in contact page
     Examples:
       | element       | text                                     |
       | Name          | Please provide a value for Name          |
@@ -46,33 +43,22 @@ Feature: Verify the contact form fields
     And the user clicks on Submit in contact page
     Then the Recaptcha has the error text Recaptcha failed, please try again. in contact page
 
-  Scenario Outline: An error message is shown when the mail has a invalid format
+  @DataSource:emails.csv
+  Scenario: An error message is shown when the mail has a invalid format
     When the user accept all in cookie modal if exist
     And the Email address is shown in contact page
     And the user edit Email address with the value <email> in contact page
     And the user clicks on Name in contact page
     Then the Email address has the error text Please provide a valid email address in contact page
-    Examples:
-      | email                   |
-      | plainaddress            |
-      | email.domain.com        |
-      | @domain.com             |
-      | #@%^%#$@#$@#.com        |
-      | email@domain@domain.com |
-  #|email@domain..com| => the error is not shown in this case
-  #|email@-domain.com| => the error is not shown in this case
-  #|email@111.222.333.44444| => the error is not shown in this case
+  ## email@domain..com => the error is not shown in this case
+  ## email@-domain.com => the error is not shown in this case
+  ## email@111.222.333.44444 => the error is not shown in this case
+  ## .email@domain.com => the error is not shown in this case
+  ## email.@domain.com => the error is not shown in this case
+  ## email..email@domain.com => the error is not shown in this case
 
-  Scenario Outline: The Enquiry type dropdown has the value
+  Scenario: The Enquiry type dropdown has the value
     When the user accept all in cookie modal if exist
     And the Enquiry Type is shown in contact page
     And the user clicks on Enquiry Type in contact page
-    Then  the enquiry type dropdown has the text <text> in contact page
-    Examples:
-      | text             |
-      |                  |
-      | Sequel Hub       |
-      | Sales            |
-      | Start ups        |
-      | Recruitment      |
-      | Events/Marketing |
+    Then the enquiry type dropdown has the values ',Sequel Hub,Sales,Start ups,Recruitment,Events/Marketing' in contact page

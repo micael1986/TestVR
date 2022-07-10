@@ -32,6 +32,14 @@ namespace TestVR.Steps
       _navBar.getWebElement(element).TagName.Should().NotBeNull();
     }
 
+    [When("the '(.*)' are shown in navigation bar")]
+    [Then("the '(.*)' are shown in navigation bar")]
+    public void homepageElementsAreShownInPage(List<String> elements)
+    {
+      elements.ForEach(element => homepageElementIsShownInPage(element));
+    }
+
+
     [Then("the (.*) has the text (.*) in navigation bar")]
     public void homepageElementHasText(string element, string text)
     {

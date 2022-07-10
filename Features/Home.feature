@@ -6,16 +6,13 @@ Feature: Verify the toolbar in homepage when the browser is greater or equal tha
   Scenario: The logo is shown in the toolbar
     Then the logo is shown in navigation bar
 
-  Scenario Outline: The nav options are shown in the homepage
-    Then the <element> is shown in navigation bar
-    And  the <element> has the text <element> in navigation bar
-    Examples:
-      | element  |
-      | Products |
-      | News     |
-      | Company  |
-      | Careers  |
-      | Contact  |
+  Scenario: The nav options are shown in the homepage
+    When the 'Products,News,Company,Careers,Contact' are shown in navigation bar
+    Then the Products has the text Products in navigation bar
+    And  the News has the text News in navigation bar
+    And  the Company has the text Company in navigation bar
+    And  the Careers has the text Careers in navigation bar
+    And  the Contact has the text Contact in navigation bar
 
   Scenario: The user can navigate to the contact page from homepage
     When the Contact is shown in navigation bar

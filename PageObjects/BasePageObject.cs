@@ -1,7 +1,5 @@
-using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using TestVR.Drivers;
 using TestVR.Helpers;
 

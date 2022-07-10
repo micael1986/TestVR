@@ -1,4 +1,3 @@
-using System.Configuration;
 namespace TestVR.Drivers
 {
   public class ConfigurationDriver

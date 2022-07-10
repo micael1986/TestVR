@@ -55,6 +55,13 @@ namespace TestVR.Steps
       _contact.getWebElement(element).TagName.Should().NotBeNull();
     }
 
+    [When("the '(.*)' are shown in contact page")]
+    [Then("the '(.*)' are shown in contact page")]
+    public void contactPageElementAreShownInPage(List<string> elements)
+    {
+      elements.ForEach(element => contactPageElementIsShownInPage(element));
+    }
+
     [Then("the (.*) has the label text (.*) in contact page")]
     public void contactPageElementHasLabelText(string element, string text)
     {
@@ -81,6 +88,14 @@ namespace TestVR.Steps
     {
       _contact.present();
       _contact.getEnquiryTypeWebElement(text).GetAttribute("innerText").Should().Be(text);
+    }
+
+    [Then("the enquiry type dropdown has the values '(.*)' in contact page")]
+    public void contactPageEnquiryTypeHasValues(List<string> values)
+    {
+      _contact.present();
+      values.ForEach(text => contactPageEnquiryTypeHasElement(text));
+
     }
 
   }
