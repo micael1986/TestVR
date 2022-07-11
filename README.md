@@ -35,8 +35,14 @@ Run the command `dotnet test` if you want to execute the test cases in chrome in
 
 `dotnet test -e BROWSER=firefox -e MODE=remote -e SELENIUM_REMOTE_URL=http://selenium-grid.labtest.com/wd/hub`
 
+## Continuous integration
+
+The test are running in GitHub using the workflows. The test are running in parallel for the next cases:
+
+- Windows server last version: Chrome headless and Firefox headless.
+- Ubuntu last version: Chrome headless, Firefox headless, Chrome remote and Firefox remote.
+
 ## Improvements
 
 - Configure the number of elements that are running in parallel by command line, currently the threads are configured in file `xunit.runner.json`
-- Run in parallel the different browsers.
-- Share the same browser instance instead of close and open the browser for each test.
+- Run in parallel the different browsers. The test are running in parallel using the CI job.
